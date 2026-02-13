@@ -12,7 +12,7 @@ class UserAuthDataSourceImpl implements UserAuthDataSource {
     try {
       final data = await ApiServices.get(
         '/v2/segments',
-        queryParameters: {'client_id': '2'},
+        queryParameters: {'client_id': '21'},
       );
       log(data.toString());
       if (data is List) {

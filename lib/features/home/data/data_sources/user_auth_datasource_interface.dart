@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:segment/features/home/domain/entities/segment_response_entity.dart';
 
 abstract class UserAuthDataSource {
-  Future<List<SegmentResponseEntity>> getSegment(BuildContext context);
+  Future<List<SegmentResponseEntity>> getSegment();
 }

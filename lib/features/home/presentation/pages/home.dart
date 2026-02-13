@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:segment/features/home/data/data_sources/user_auth_datasource_impl.dart';
+import 'package:segment/features/home/data/repositories/user_auth_repository_impl.dart';
 import 'package:segment/features/home/domain/entities/segment_response_entity.dart';
 
 class Home extends StatefulWidget {
@@ -17,11 +18,26 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      segments = await UserAuthDataSourceImpl().getSegment(context);
-      if (mounted) {
-        setState(() {
-          isLoading = false;
-        });
+      final repository = UserAuthRepositoryImpl(
+        dataSource: UserAuthDataSourceImpl(),
+      );
+      try {
+        final result = await repository.getSegments();
+        if (mounted) {
+          setState(() {
+            segments = result;
+            isLoading = false;
+          });
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("$e")));
+          setState(() {
+            isLoading = false;
+          });
+        }
       }
     });
   }

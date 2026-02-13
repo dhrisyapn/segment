@@ -2,10 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:segment/core/services/api_services.dart';
+import 'package:segment/features/home/data/data_sources/user_auth_datasource_interface.dart';
 import 'package:segment/features/home/data/model/segment_response.dart';
 import 'package:segment/features/home/domain/entities/segment_response_entity.dart';
 
-class UserAuth {
+class UserAuthDataSourceImpl implements UserAuthDataSource {
+  @override
   Future<List<SegmentResponseEntity>> getSegment(BuildContext context) async {
     try {
       final data = await ApiServices.get(
@@ -25,7 +27,11 @@ class UserAuth {
       }
     } catch (e) {
       // Log the error or handle it as needed
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$e")));
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("$e")));
+      }
     }
     return [];
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:segment/features/home/data/data_sources/user_auth_datasource_impl.dart';
 import 'package:segment/features/home/domain/entities/segment_response_entity.dart';
-import 'package:segment/user_auth.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -17,7 +17,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      segments = await UserAuth().getSegment(context);
+      segments = await UserAuthDataSourceImpl().getSegment(context);
       if (mounted) {
         setState(() {
           isLoading = false;

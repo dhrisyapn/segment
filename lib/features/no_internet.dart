@@ -28,7 +28,7 @@ class NoInternet extends StatelessWidget {
 
                     // 2. If available, go back to previous page
                     if (hasInternet && navigatorKey.currentState!.canPop()) {
-                      navigatorKey.currentState!.pop();
+                      navigatorKey.currentState!.pop(true);
                     }
                   },
               child: const Text('Retry'),
